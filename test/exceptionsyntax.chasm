@@ -1,0 +1,32 @@
+
+
+
+
+method start<*__csm_str> void {
+    $limstack = 15;
+    $limlocal = 15;
+    $debugsym = "SomeKindOfSymbol";
+    
+    psh_b 0;
+    dup;
+try {
+    div_q;
+} except SomeException {
+    ldsc "Some exception has occurred!";
+    call __io_print_strconst;
+    call __sys_exit;
+    call __io_print_b;
+    leave;
+} except AnotherException {
+    nop;
+    try {
+        psh_b 0;
+        dup;
+        leave;
+    } except FooBar {
+        ret;
+    }
+    throw;
+}
+    leave;
+}

@@ -1,0 +1,37 @@
+# This test should print "Hello world!" to the console 10 times. A good first
+# test of the instruction set, particularly the "call" instruction's ability
+# to resolve a symbol as a native/bytecode method. Also tests looping!
+# Note the use of semicolons to terminate instructions. We might change this
+# later.
+
+method start<*__csm_str> void {
+
+$limstack = 2;
+$limlocal = 1;
+    
+    psh_b       0;
+    stl         0;
+
+@loop:
+    
+    ldl         0;
+    psh_b      10;
+    cmp_q;
+    jmp_eqz     end;
+    ldl         0;
+    psh_b       1;
+    add_q;
+    stl         0;
+    ldsc        "Hello world!";
+    call        __io_print_strconst;
+    jmp         loop;
+
+@end:
+    
+    leave;
+}
+
+object _multi_arr_i8 {
+    *int64,
+    *int64
+}
